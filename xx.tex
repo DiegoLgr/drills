@@ -1,0 +1,69 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\title{DFAT Configurable}
+\date{2013-09-01}
+\author{
+	Heredia Casado, Francisco\\
+	\and
+	Heredia Casado, Francisco\\
+	\and
+	Heredia Casado, Francisco\\
+	\and
+	López García-Ripoll, Diego\\
+}
+\begin{document}
+\maketitle
+\newpage
+\section{Uso e Interfaz}
+Al ejecutar un programa se presenta un menu que a partir del cual se puede
+submenú que permite introducir una cadena de caracteres arbitrariamente larga.
+Una vez introducida la cadena se informará de si pertenence o no al leguaje y en
+caso de que pertenezca se mostrará su traducción.
+
+\section{Modelado del automata}
+El autómata consite en un conjunto de estados cada estado guarda
+si es final, y el conjunto de transiciones que que salen de el.
+Cada transición guarda información del estado al que apunta,
+su símbolo y la traducción de dicho símbolo.
+Ademas es necesario guardar información del
+estado en el que se está y de la traducción que se va formando al ir leyendo la
+entrada. Antes de leer ningún caracter de la entrada el estado actual siempre
+será el estado inicial.
+La forma de operar segun este modelo es la siguiente:
+se lee un caracter, se mira si alguna de las transiciones que sale del estado
+actual
+tiene ese simbolo, si lo tiene se concatena la traducción acumulada con la
+traducción del símbolo seído y se guarda el estado destino como estado actual.
+Se repite este proceso hasta que no queden simbolos en la cadena de entrada. Por
+último se comprueba se el estado actual es final, en cuyo caso se muestra la
+traducción.
+
+\section{Implementación}
+\subsection{Estructuras dinámicas}
+Nos interesa especialmente señalar aquellos elementos cuyo tamaño es
+desconocido en tiempo de compilación, que serán los que condicionen nuestra
+implementación.
+Estados: Se modelan con una estructura, sus direcciones se almacenan en un array en la memoria libre.
+Transiciones: Para cada estado se forma una lista enlazada con las transiciones
+salientes, guardando la dirección de la primera en el estado en un campo del
+estado.
+Traducción: se reserva un array de caracteres de tamaño fijo pero en la memoria libre, de
+forma que si se llena se puede recolocar con más espacio.
+Cadena: No es necesario almacenar la entrada,El autómata lee los caracteres
+secuencialmente desde la entrada.
+
+\subsection{Resumen de las estructuras usadas}
+Automata: estado en el que se encuentra, si se ha leido correctamente toda la
+entrada, la traducción, dirección al array de estados.
+Estado: direción de la primera transición de su lista, si es final, el nombre
+con el que aparece en el documento.
+Transición: su símbolo, su destino, el trozo de traducción asociado, la
+dirección de la siguiente transición.
+
+\subsection{Fichero de especificación}
+La configuración del autómata consta de 4 partes (ejemplo en el apendice A):
+el numero de estados, la lista de estados (los nombres deben estar formados por
+carácteres alfanuméricos y tener menos de 20), la lista de los estados finales y
+la lista de transiciones TODO ESTO MEJOR COPIARLO DEL README
+
+\end{document}
